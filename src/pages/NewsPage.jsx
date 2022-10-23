@@ -6,8 +6,8 @@ import classes from './NewsPage.module.css'
 
 export function NewsPage() {
   const [news, setNews] = useState([])
-  const [offset, setOffset] = useState(0)
-  const LIMIT = '10'
+  const [offset, setOffset] = useState(1)
+  const LIMIT = '1'
 
   const parentRef = useRef(null)
   const childRef = useRef(null)
@@ -21,7 +21,6 @@ export function NewsPage() {
       `http://api.mediastack.com/v1/news?access_key=${process.env.REACT_APP_OPEN_NEWS_FEED_API_KEY}&languages=en&limit=${limit}&offset=${page}`
     )
     const { data } = await res.json()
-    console.log(1111, res)
     setNews((prev) => [...prev, ...data])
     setOffset((prev) => prev + 1)
   }
@@ -29,7 +28,7 @@ export function NewsPage() {
   return (
     <>
       <BasicAppBar />
-      <div ref={parentRef}>
+      <div ref={parentRef} style={{ height: '300px', overflow: 'auto' }}>
         <h3 className={classes.header}>News Page</h3>
         {news.map((el, i) => (
           <div className={classes.list} key={i}>
